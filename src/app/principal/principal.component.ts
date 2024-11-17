@@ -21,6 +21,9 @@ export class PrincipalComponent {
   btnRemover: boolean = false;
   btnCancelar: boolean = false;
 
+  // Variável para visibilidade da tabela
+  tabela: boolean = true;
+
   // Json de clientes
   clientes: Cliente[] = [];
 
@@ -44,6 +47,91 @@ export class PrincipalComponent {
       //Mensagem
       alert('Cliente cadastrado com sucesso!');
     });
+  }
+
+  // Método de editar clientes
+  editar(): void {
+    this.servico.editar(this.cliente).subscribe((retorno) => {
+      // Obter posição do vetor onde está o cliente
+      let posicao = this.clientes.findIndex((objt) => {
+        return objt.codigo == this.cliente.codigo;
+      });
+
+      //Alterar os dados do cliente no vetor
+      this.clientes[posicao] = retorno;
+
+      //Visibilidades dos botões
+      this.btnCadastro = true;
+      this.btnAlterar = false;
+      this.btnRemover = false;
+      this.btnCancelar = false;
+
+      //Visibilidade da tabela
+      this.tabela = true;
+
+      //Limpar o formulário
+      this.cliente = new Cliente();
+
+      //Mensagem
+      alert('Cliente alterado com sucesso!');
+    });
+  }
+
+  // Metodo de remover clientes
+  remover(): void {
+    this.servico.remover(this.cliente.codigo).subscribe((retorno) => {
+      // Obter posição do vetor onde estava o cliente
+      let posicao = this.clientes.findIndex((obj) => {
+        return obj.codigo == this.cliente.codigo;
+      });
+
+      //Remover o cliente do vetor
+      this.clientes.splice(posicao, 1);
+
+      //Visibilidades dos botões
+      this.btnCadastro = true;
+      this.btnAlterar = false;
+      this.btnRemover = false;
+      this.btnCancelar = false;
+
+      //Visibilidade da tabela
+      this.tabela = true;
+
+      //Limpar o formulário
+      this.cliente = new Cliente();
+      //Mensagem
+      alert('Cliente removido com sucesso!');
+    });
+  }
+
+  // Método para cancelar as alterações
+  cancelar(): void {
+    //Limpar o formulário
+    this.cliente = new Cliente();
+
+    //Visibilidades dos botões
+    this.btnCadastro = true;
+    this.btnAlterar = false;
+    this.btnRemover = false;
+    this.btnCancelar = false;
+
+    //Visibilidade da tabela
+    this.tabela = true;
+  }
+
+  // Método para selecionar um cliente especifico
+  selecionarCliente(posicao: number): void {
+    // Selecionar cliente no vetor
+    this.cliente = this.clientes[posicao];
+
+    //Visibiilidade dos botões
+    this.btnCadastro = false;
+    this.btnAlterar = true;
+    this.btnRemover = true;
+    this.btnCancelar = true;
+
+    //Visibilidade da tabela
+    this.tabela = false;
   }
 
   // Método de inicialização

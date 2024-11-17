@@ -10,12 +10,13 @@
 
   <input type="button" value="Cadastrar" *ngIf="btnCadastro" class="btn btn-primary" (click)="cadastrar()"
     title="Cadastrar">
-  <input type=" button" value="Alterar" *ngIf="btnAlterar" class="btn btn-warning" title="Alterar">
-  <input type="button" value="Remover" *ngIf="btnRemover" class="btn btn-danger" title="Remover">
-  <input type="button" value="Cancelar" *ngIf="btnCancelar" class="btn btn-secondary" title="Cancelar">
+  <input type=" button" value="Alterar" *ngIf="btnAlterar" class="btn btn-warning" title="Alterar" (click)="editar()">
+  <input type="button" value="Remover" *ngIf="btnRemover" class="btn btn-danger" title="Remover" (click)="remover()">
+  <input type="button" value="Cancelar" *ngIf="btnCancelar" class="btn btn-secondary" title="Cancelar"
+    (click)="cancelar()">
 </form>
 
-<table class="table">
+<table class="table" *ngIf="tabela">
   <thead>
     <tr>
       <th>#</th>
@@ -33,7 +34,7 @@
       <td>{{c.nome}}</td>
       <td>{{c.idade}}</td>
       <td>{{c.cidade}}</td>
-      <td><button class="btn btn-success">Selecionar</button></td>
+      <td><button class="btn btn-success" (click)="selecionarCliente(i)">Selecionar</button></td>
     </tr>
   </tbody>
 </table>
