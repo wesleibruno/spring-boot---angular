@@ -12,7 +12,6 @@ import { ClienteService } from '../servico/cliente.service';
   styleUrl: './principal.component.css',
 })
 export class PrincipalComponent {
-
   // Objeto do tipo Cliente
   cliente: Cliente = new Cliente();
 
@@ -30,11 +29,25 @@ export class PrincipalComponent {
 
   // Método de seleção
   selecionar(): void {
-    this.servico.selecionar().subscribe(retorno => this.clientes = retorno);
+    this.servico.selecionar().subscribe((retorno) => (this.clientes = retorno));
+  }
+
+  // Método de cadastro
+  cadastrar(): void {
+    this.servico.cadastrar(this.cliente).subscribe((retorno) => {
+      //Cadastrar o cliente no vetor
+      this.clientes.push(retorno);
+
+      //Limpar o formulário
+      this.cliente = new Cliente();
+
+      //Mensagem
+      alert('Cliente cadastrado com sucesso!');
+    });
   }
 
   // Método de inicialização
-  ngOnInit(){
+  ngOnInit() {
     this.selecionar();
   }
 }
